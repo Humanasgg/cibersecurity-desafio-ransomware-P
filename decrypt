@@ -1,0 +1,28 @@
+import pyaes
+
+def decrypt_file(encrypted_file_name, key):
+    # Abrir o arquivo criptografado
+    with open(encrypted_file_name, "rb") as encrypted_file:
+        encrypted_data = encrypted_file.read()
+
+    # Criar o objeto AES
+    aes = pyaes.AESModeOfOperationCTR(key)
+
+    # Descriptografar o arquivo
+    decrypted_data = aes.decrypt(encrypted_data)
+
+    # Obter o nome original do arquivo
+    original_file_name = encrypted_file_name.replace(".ransomwaretroll", "")
+
+    # Salvar o arquivo descriptografado
+    with open(original_file_name, 'wb') as decrypted_file:
+        decrypted_file.write(decrypted_data)
+
+    print(f"Arquivo {encrypted_file_name} descriptografado como {original_file_name}")
+
+if __name__ == '__main__':
+    encrypted_file_name = "teste.txt.ransomwaretroll"
+    key = b"testeransomwares"  # A chave deve ter 16, 24 ou 32 bytes para AES
+
+    # Descriptografar o arquivo
+    decrypt_file(encrypted_file_name, key)
